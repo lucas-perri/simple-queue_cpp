@@ -21,7 +21,7 @@ public:
     const int value(){ return this->_value; }
 
     // Returns a pointer to the next node
-    Node* next(){ return this->next; }
+    Node* next(){ return this->_next; }
 
     // Returns a pointer to the previous node
     Node* prev(){ return this->_prev; }
