@@ -79,22 +79,22 @@ public:
     // Returns whether the queue is empty or not
     const bool empty(){ return this->_size == 0; }
 
-    // Returns the value of the node at the front of the queue
+    // Returns the value of the element at the front of the queue
     const int front()
     {
         if(this->empty()) throw underflow_error("Queue is empty!");
         return this->_front->value();
     }
 
-    // Returns the value of the node at the back of the queue
+    // Returns the value of the element at the back of the queue
     const int back()
     {
         if(this->empty()) throw underflow_error("Queue is empty!");
         return this->_back->value();
     }
 
-    // Add a node to the back of the queue
-    void push_back(int value)
+    // Add an element to the back of the queue
+    void push(int value)
     {
         Node *new_node;
         try{ new_node = new Node(value, this->_back); }
@@ -105,7 +105,8 @@ public:
         if(this->_size == 0) throw overflow_error("Queue is full!");
     }
 
-    int pop_front()
+    // Remove the element at the front of the queue and return its value
+    int pop()
     {
         if(this->empty()) throw underflow_error("Queue is empty!");
         Node *old_node = this->_front;
@@ -117,7 +118,7 @@ public:
     }
 
     Queue();
-    ~Queue(){ while(!this->empty()) pop_front(); }
+    ~Queue(){ while(!this->empty()) this->pop(); }
 };
 
 int main(){}
