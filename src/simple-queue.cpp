@@ -1,4 +1,5 @@
 #include <stddef.h>
+#include <stdexcept>
 
 using namespace std;
 
@@ -79,22 +80,34 @@ public:
     const bool empty(){ return this->_size == 0; }
 
     // Returns the value of the node at the front of the queue
-    const int front(){ return this->_front->value(); }
+    const int front()
+    {
+        if(this->empty()) throw underflow_error("Queue is empty!");
+        return this->_front->value();
+    }
 
     // Returns the value of the node at the back of the queue
-    const int back(){ return this->_back->value(); }
+    const int back()
+    {
+        if(this->empty()) throw underflow_error("Queue is empty!");
+        return this->_back->value();
+    }
 
     // Add a node to the back of the queue
     void push_back(int value)
     {
-        Node *new_node = new Node(value, this->_back);
+        Node *new_node;
+        try{ new_node = new Node(value, this->_back); }
+        catch(bad_alloc){ throw; }
         if(this->_size == 0) this->_front = new_node;
         this->_back = new_node;
         this->_size++;
+        if(this->_size == 0) throw overflow_error("Queue is full!");
     }
 
     int pop_front()
     {
+        if(this->empty()) throw underflow_error("Queue is empty!");
         Node *old_node = this->_front;
         this->_front = this->_front->next();
         int value = old_node->value();
